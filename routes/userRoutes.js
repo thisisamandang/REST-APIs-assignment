@@ -1,7 +1,13 @@
 const router = require("express").Router();
-const User = require("../models/userModel");
+const User = require("../models/userSchema");
 const { body } = require("express-validator");
-const { signup, login, register } = require("../controllers/userController");
+const {
+  signup,
+  login,
+  register,
+  updateUser,
+} = require("../controllers/userController");
+const isAuth = require("../middleware/isAuth");
 
 // Signup / Register route
 router.post(
@@ -27,5 +33,7 @@ router.post(
 
 // Login route
 router.post("/login", login);
+
+router.patch("/users/:userId", isAuth, updateUser);
 
 module.exports = router;

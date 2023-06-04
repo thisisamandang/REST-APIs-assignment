@@ -1,8 +1,9 @@
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const User = require("../models/userModel");
+const User = require("../models/userSchema");
 
+// Signup function
 module.exports.signup = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -49,6 +50,7 @@ module.exports.signup = async (req, res, next) => {
     });
 };
 
+// Login Function
 module.exports.login = (req, res, next) => {
   const password = req.body.password;
   const email = req.body.email;
@@ -83,7 +85,8 @@ module.exports.login = (req, res, next) => {
       // JWT Token generation
       const token = jwt.sign(
         { email: currentUser.email },
-        process.env.JWT_AUTH_KEY,
+        // process.env.JWT_AUTH_KEY,
+        "secretkey",
         {
           expiresIn: "1h",
         }
@@ -104,4 +107,31 @@ module.exports.login = (req, res, next) => {
       }
       next(err);
     });
+};
+
+// Updating user profiles
+module.exports.updateUser = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const { name, age } = req.body;
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { name, age },
+      { new: true }
+    );
+    if (!user) {
+      return res.status(404).json({ statusCode: 404, error: "User not found" });
+    }
+
+    res.json({
+      statusCode: 200,
+      data: {
+        user,
+      },
+      message: "User profile updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ statusCode: 500, error: "Internal server error" });
+  }
 };
