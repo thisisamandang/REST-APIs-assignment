@@ -8,5 +8,8 @@ password: 12345678
 --
 
 # Routes
-https://article-backend-m66i.onrender.com/api/login  <br>
-https://article-backend-m66i.onrender.com/api/signup
+signup (POST) https://article-backend-m66i.onrender.com/api/signup <br>
+login(POST)   https://article-backend-m66i.onrender.com/api/login  <br>
+postArticles(POST)   https://article-backend-m66i.onrender.com/api/users/<:userId>/articles <br>
+getArticles(GET) https://article-backend-m66i.onrender.com/api/articles  <br>
+updateUser (PATCH) https://article-backend-m66i.onrender.com/api//users/:userId
