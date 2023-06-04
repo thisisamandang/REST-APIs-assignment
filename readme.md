@@ -9,3 +9,4 @@ password: 12345678
 
 # Routes
 https://article-backend-m66i.onrender.com/api/login  <br>
+https://article-backend-m66i.onrender.com/api/signup
