@@ -11,6 +11,7 @@ app.use(express.json());
 app.use("/api", userRoutes);
 app.use("/api", articleRoutes);
 
+// We can also use CORS package to set headers.
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
